@@ -2,26 +2,19 @@
 Sphinx勉強会
 ============
 
+Contents:
 
-開催情報
-========
+.. toctree::
+    :maxdepth: 2
+    :numbered:
+    :glob:
 
-* 日時： 2013/12/21 13:00-17:00
-* 場所： CoCoDe
-* 参加者： planset, ...
+    tutorial/*
 
-勉強会の内容
-============
+Indices and tables
+==================
 
-1. 項目1
-2. 項目2
-3. 項目3
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 
-資料
-====
-
-* http://sphinx-doc.org/
-* `github <https://github.com>`_
-* Sphinx-users.jp_
-
-.. _Sphinx-users.jp: http://sphinx-users.jp/

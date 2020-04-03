@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>1. Getting Started &#8212; sphinxtest  ドキュメント</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="2. pipeline" href="pipeline.html" />
+    <link rel="prev" title="Sphinx勉強会" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="getting-started">
+<h1><span class="section-number">1. </span>Getting Started<a class="headerlink" href="#getting-started" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="lesson1-introduction">
+<h2><span class="section-number">1.1. </span>LESSON1 Introduction<a class="headerlink" href="#lesson1-introduction" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Welcome to Quantopian! The Getting Started Tutorial will guide you through researching and developing a quantitative trading strategy in Quantopian. It covers many of the basics of Quantopian's API, and is designed for those who are new to the platform. All you need to get started on this tutorial is to have some basic Python programming skills.</p>
+<div class="section" id="what-is-a-trading-algorithm">
+<h3><span class="section-number">1.1.1. </span>What is a Trading Algorithm?<a class="headerlink" href="#what-is-a-trading-algorithm" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>A trading algorithm is a computer program that defines a set of rules for buying and selling assets. Most trading algorithms make decisions based on mathematical or statistical models that are derived from research conducted on historical data.</p>
+</div>
+<div class="section" id="where-do-i-start">
+<h3><span class="section-number">1.1.2. </span>Where do I start?<a class="headerlink" href="#where-do-i-start" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><a class="reference external" href="https://www.quantopian.com/clone_notebook?id=5a53d1023b88ce715e5bd502&amp;title=Getting_Started_Tutorial_-_Lesson_1">Get Notebook</a></p>
+<p>The first step to writing a trading algorithm is to find an economic or statistical relationship on which we can base our strategy. To do this, we can use Quantopian's Research environment to access and analyze historical datasets available in the platform. Research is a Jupyter Notebook environment that allows us to run Python code in units called &quot;cells.&quot; For example, the following code plots the daily closing price for Apple Inc. (AAPL), along with its 20 and 50 day moving averages:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Research environment functions</span>
+<span class="kn">from</span> <span class="nn">quantopian.research</span> <span class="kn">import</span> <span class="n">prices</span><span class="p">,</span> <span class="n">symbols</span>
+
+<span class="c1"># Pandas library: https://pandas.pydata.org/</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Query historical pricing data for AAPL</span>
+<span class="n">aapl_close</span> <span class="o">=</span> <span class="n">prices</span><span class="p">(</span>
+    <span class="n">assets</span><span class="o">=</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;AAPL&#39;</span><span class="p">),</span>
+    <span class="n">start</span><span class="o">=</span><span class="s1">&#39;2013-01-01&#39;</span><span class="p">,</span>
+    <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2016-01-01&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Compute 20 and 50 day moving averages on</span>
+<span class="c1"># AAPL&#39;s pricing data</span>
+<span class="n">aapl_sma20</span> <span class="o">=</span> <span class="n">aapl_close</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">aapl_sma50</span> <span class="o">=</span> <span class="n">aapl_close</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c1"># Combine results into a pandas DataFrame and plot</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;AAPL&#39;</span><span class="p">:</span> <span class="n">aapl_close</span><span class="p">,</span>
+    <span class="s1">&#39;SMA20&#39;</span><span class="p">:</span> <span class="n">aapl_sma20</span><span class="p">,</span>
+    <span class="s1">&#39;SMA50&#39;</span><span class="p">:</span> <span class="n">aapl_sma50</span>
+<span class="p">})</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;AAPL Close Price / SMA Crossover&#39;</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>To use the above code copy and paste it into a new notebook in Research, or click the Get Notebook button at the top right corner of this lesson. Once you are in Research, press Shift+Enter to run the cell. The output should look like this:</p>
+<img alt="https://www.quantopian.com/assets/tutorials/getting_started/getting_started1_l1_screenshot1-3825f3e80008823f0895a8f194f5d325c8ae1edb6635e3d2566fad41b8538bb3.png" src="https://www.quantopian.com/assets/tutorials/getting_started/getting_started1_l1_screenshot1-3825f3e80008823f0895a8f194f5d325c8ae1edb6635e3d2566fad41b8538bb3.png" />
+<p>In the next lesson we will use <a class="reference external" href="https://www.quantopian.com/notebooks">Research</a> to explore Quantopian's datasets. Then, we will define our trading strategy and test whether it can effectively predict returns based on historical data. Finally, we will use our findings to develop and test a trading algorithm in the Interactive Development Environment (IDE).</p>
+</div>
+</div>
+<div class="section" id="lesson-2-data-exploration">
+<h2><span class="section-number">1.2. </span>LESSON 2 Data Exploration<a class="headerlink" href="#lesson-2-data-exploration" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference external" href="https://www.quantopian.com/clone_notebook?id=5a53d1023b88ce715e5bd503&amp;title=Getting_Started_Tutorial_-_Lesson_2">Get Notebook</a></p>
+<p>Lessons 2-4 will be conducted in the Research environment. To get set up in Research, create a new notebook or clone the notebook version of this lesson by clicking Get Notebook below.</p>
+<p>Research provides utility functions to query pricing, volume, and returns data for 8000+ US equities, from 2002 up to the most recently completed trading day. These functions take an asset (or list of assets) along with a start and end date, and return a pandas <a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.18/generated/pandas.Series.html">Series</a> (or <a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.18/generated/pandas.DataFrame.html">DataFrame</a>) indexed by date.
+Let's define the period of time we want to explore and use the returns function to query data for AAPL:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Research environment functions</span>
+<span class="kn">from</span> <span class="nn">quantopian.research</span> <span class="kn">import</span> <span class="n">returns</span><span class="p">,</span> <span class="n">symbols</span>
+
+<span class="c1"># Select a time range to inspect</span>
+<span class="n">period_start</span> <span class="o">=</span> <span class="s1">&#39;2014-01-01&#39;</span>
+<span class="n">period_end</span> <span class="o">=</span> <span class="s1">&#39;2014-12-31&#39;</span>
+
+<span class="c1"># Query returns data for AAPL</span>
+<span class="c1"># over the selected time range</span>
+<span class="n">aapl_returns</span> <span class="o">=</span> <span class="n">returns</span><span class="p">(</span>
+    <span class="n">assets</span><span class="o">=</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;AAPL&#39;</span><span class="p">),</span>
+    <span class="n">start</span><span class="o">=</span><span class="n">period_start</span><span class="p">,</span>
+    <span class="n">end</span><span class="o">=</span><span class="n">period_end</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Display first 10 rows</span>
+<span class="n">aapl_returns</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="https://www.quantopian.com/assets/tutorials/getting_started/getting_started1_l2_screenshot1-ecd31677096c10753ee59b00075b4f5970d702a839d43646ca4a9c75ce598053.png" src="https://www.quantopian.com/assets/tutorials/getting_started/getting_started1_l2_screenshot1-ecd31677096c10753ee59b00075b4f5970d702a839d43646ca4a9c75ce598053.png" />
+<div class="section" id="alternative-data">
+<h3><span class="section-number">1.2.1. </span>Alternative Data<a class="headerlink" href="#alternative-data" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>In addition to pricing and volume data, Quantopian integrates a number of other datasets that include corporate fundamentals, stock sentiment analysis, and consensus estimates, to name a few. You can find the complete list of datasets in Quantopian's <a class="reference external" href="https://www.quantopian.com/docs/data-reference/overview">Data Reference</a>.
+Our goal in this tutorial will be to build an algorithm that selects and trades assets based on sentiment data, so let's take a look at PsychSignal's <a class="reference external" href="https://www.quantopian.com/docs/data-reference/psychsignal">StockTwits Trader Mood dataset</a>. PsychSignal's dataset assigns bull and bear scores to stocks each day based on the aggregate sentiment from messages posted on Stocktwits, a financial communications platform.
+We can start by inspecting the message volume and sentiment score (bull minus bear) columns from the stocktwits dataset. We will query the data using Quantopian's Pipeline API, which is a powerful tool you will use over and over again to access and analyze data in Research. You will learn a lot more about the Pipeline API in the next lesson and a <a class="reference external" href="https://www.quantopian.com/tutorials/pipeline">later tutorial</a>. For now all you need to know is that the following code uses a data pipeline to query stocktwits and returns data, and plots the results for AAPL:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pipeline imports</span>
+<span class="kn">from</span> <span class="nn">quantopian.research</span> <span class="kn">import</span> <span class="n">run_pipeline</span>
+<span class="kn">from</span> <span class="nn">quantopian.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">quantopian.pipeline.factors</span> <span class="kn">import</span> <span class="n">Returns</span>
+<span class="kn">from</span> <span class="nn">quantopian.pipeline.data.psychsignal</span> <span class="kn">import</span> <span class="n">stocktwits</span>
+
+<span class="c1"># Pipeline definition</span>
+<span class="k">def</span> <span class="nf">make_pipeline</span><span class="p">():</span>
+
+    <span class="n">returns</span> <span class="o">=</span> <span class="n">Returns</span><span class="p">(</span><span class="n">window_length</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">sentiment</span> <span class="o">=</span> <span class="n">stocktwits</span><span class="o">.</span><span class="n">bull_minus_bear</span><span class="o">.</span><span class="n">latest</span>
+    <span class="n">msg_volume</span> <span class="o">=</span> <span class="n">stocktwits</span><span class="o">.</span><span class="n">total_scanned_messages</span><span class="o">.</span><span class="n">latest</span>
+
+    <span class="k">return</span> <span class="n">Pipeline</span><span class="p">(</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+            <span class="s1">&#39;daily_returns&#39;</span><span class="p">:</span> <span class="n">returns</span><span class="p">,</span>
+            <span class="s1">&#39;sentiment&#39;</span><span class="p">:</span> <span class="n">sentiment</span><span class="p">,</span>
+            <span class="s1">&#39;msg_volume&#39;</span><span class="p">:</span> <span class="n">msg_volume</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+
+<span class="c1"># Pipeline execution</span>
+<span class="n">data_output</span> <span class="o">=</span> <span class="n">run_pipeline</span><span class="p">(</span>
+    <span class="n">make_pipeline</span><span class="p">(),</span>
+    <span class="n">start_date</span><span class="o">=</span><span class="n">period_start</span><span class="p">,</span>
+    <span class="n">end_date</span><span class="o">=</span><span class="n">period_end</span>
+<span class="p">)</span>
+
+<span class="c1"># Filter results for AAPL</span>
+<span class="n">aapl_output</span> <span class="o">=</span> <span class="n">data_output</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span>
+    <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;AAPL&#39;</span><span class="p">),</span>
+    <span class="n">level</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+
+<span class="c1"># Plot results for AAPL</span>
+<span class="n">aapl_output</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">subplots</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="https://www.quantopian.com/assets/tutorials/getting_started/getting_started1_l2_screenshot2-fda42689e3ebaa6061d9a70fb1395a6dd90d2b5cb6fd49ce41f2978416843d2a.png" src="https://www.quantopian.com/assets/tutorials/getting_started/getting_started1_l2_screenshot2-fda42689e3ebaa6061d9a70fb1395a6dd90d2b5cb6fd49ce41f2978416843d2a.png" />
+<p>When exploring a dataset, try to look for patterns that might serve as the basis for a trading strategy. For example, the above plot shows some matching spikes between daily returns and stocktwits message volume, and in some cases the direction of the spikes in returns match the direction of AAPL's sentiment score. This looks interesting enough that we should conduct more rigorous statistical tests to confirm our hypotheses.
+In the next lesson we will cover the Pipeline API in more depth.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">sphinxtest</a></h1>
+
+
+
+
+
+
+
+
+<h3>ナビゲーション</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lesson1-introduction">1.1. LESSON1 Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lesson-2-data-exploration">1.2. LESSON 2 Data Exploration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline.html">2. pipeline</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../index.html" title="前の章へ">Sphinx勉強会</a></li>
+      <li>Next: <a href="pipeline.html" title="次の章へ"><span class="section-number">2. </span>pipeline</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, yamecha.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/tutorial/getting_started.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
